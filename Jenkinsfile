@@ -12,7 +12,7 @@ pipeline{
         stage('SONARQUBE ANALYSIS'){
             steps{
                 withSonarQubeEnv('sonar') {
-                    bat "${SCANNER_HOME}/bin/sonar-scanner -Dsonar.projectKey=nodejsmysql -Dsonar.projectName=nodejsmysql"
+                    sh "${SCANNER_HOME}/bin/sonar-scanner -Dsonar.projectKey=nodejsmysql -Dsonar.projectName=nodejsmysql"
                 }
             }
         }

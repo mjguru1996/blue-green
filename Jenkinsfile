@@ -6,7 +6,7 @@ pipeline{
         booleanParam(name: 'SWITCH_TRAFFIC', defaultValue: false, description: 'Switch traffic between Blue and Green')
     }
     environment{
-        IMAGE_NAME = "adijaiswal/bankapp"
+        IMAGE_NAME = "guruprasadkannan/bankapp"
         TAG = "${params.DOCKER_TAG}"  // The image tag now comes from the parameter
         KUBE_NAMESPACE = 'webapps'
         SCANNER_HOME = tool 'sonar-scanner'

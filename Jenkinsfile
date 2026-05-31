@@ -12,12 +12,12 @@ pipeline{
         SCANNER_HOME = tool 'sonar-scanner'
     }
     stages{
-        stage('SCM CHECKOUT'){
+        stage('Checkout Code'){
             steps{
                 git branch: 'main', changelog: false, poll: false, url: 'https://github.com/mjguru1996/blue-green.git'
             }
         }
-        stage('SONARQUBE ANALYSIS'){
+        stage('Sonarqube Analysis'){
             steps{
                 withSonarQubeEnv('sonar') {
                     sh "${SCANNER_HOME}/bin/sonar-scanner -Dsonar.projectKey=nodejsmysql -Dsonar.projectName=nodejsmysql"
@@ -40,6 +40,14 @@ pipeline{
         stage('Trivy Image Scan') {
             steps {
                 sh "trivy image --format table -o image.html ${IMAGE_NAME}:${TAG}"
+            }
+        }
+        stage('Docker push') {
+            steps {
+                script{
+                    withDockerRegistry(credentialsId: 'docker-cred') {
+                        sh "docker push ${IMAGE_NAME}:${TAG}"}
+                }
             }
         }
     }
